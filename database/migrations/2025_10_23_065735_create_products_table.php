@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignUuid('supplier_id')->constrained('suppliers', 'id');
             $table->decimal('price', 8, 2);
             $table->string('file_url');
-            $table->boolean('is_active')->comment('For soft delete');
+            $table->boolean('is_active')->default(true)->comment('For soft delete');
             $table->foreignUuid('created_by')->constrained('users', 'id');
             $table->foreignUuid('updated_by')->constrained('users', 'id');
             $table->timestamps();
