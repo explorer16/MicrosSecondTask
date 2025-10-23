@@ -4,13 +4,17 @@ namespace App\Models;
 
 use App\Traits\PrimaryUUID;
 use App\Traits\UserRelations;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
     use UserRelations, PrimaryUUID;
+    use HasFactory;
 
     protected $table = 'categories';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable = ['name', 'parent_id', 'created_by', 'updated_by'];
 
     public function histories()

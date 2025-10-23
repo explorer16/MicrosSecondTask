@@ -10,6 +10,8 @@ class History extends Model
     use PrimaryUUID;
 
     protected $table = 'histories';
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable = ['user_id', 'entity_type', 'entity_id', 'action', 'changes', 'created_at'];
 
     public function entity()
