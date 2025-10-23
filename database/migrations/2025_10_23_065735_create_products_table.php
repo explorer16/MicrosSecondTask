@@ -17,11 +17,11 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->foreignUuid('category_id')->constrained('categories', 'id');
             $table->foreignUuid('supplier_id')->constrained('suppliers', 'id');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 9, 2);
             $table->string('file_url');
             $table->boolean('is_active')->default(true)->comment('For soft delete');
             $table->foreignUuid('created_by')->constrained('users', 'id');
-            $table->foreignUuid('updated_by')->constrained('users', 'id');
+            $table->foreignUuid('updated_by')->nullable()->constrained('users', 'id');
             $table->timestamps();
         });
     }
