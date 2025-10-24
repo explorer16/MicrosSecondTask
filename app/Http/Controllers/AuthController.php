@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -25,7 +25,14 @@ class AuthController extends Controller
         $user = Auth::user();
         $token = $user->createToken('access_token')->accessToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json([
+            'data' => [
+                'token' => $token,
+            ],
+            'message' => 'Регистрация прошла успешно',
+            'timestamp' => Carbon::now()->toDateTimeString(),
+            'success' => true,
+        ]);
     }
 
     public function register(RegisterRequest $request): \Illuminate\Http\JsonResponse
@@ -34,6 +41,13 @@ class AuthController extends Controller
 
         $token = $user->createToken('Access Token')->accessToken;
 
-        return response()->json(['token' => $token]);
+        return response()->json([
+            'data' => [
+                'token' => $token,
+            ],
+            'message' => 'Регистрация прошла успешно',
+            'timestamp' => Carbon::now()->toDateTimeString(),
+            'success' => true,
+        ]);
     }
 }
