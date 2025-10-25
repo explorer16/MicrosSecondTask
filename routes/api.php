@@ -8,8 +8,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 Route::group([
-    'middleware' => 'api',
-    'prefix' => 'api',
+    'middleware' => 'auth:api',
     'namespace' => 'App\Http\Controllers\Api',
 ], function () {
     Route::apiResource('suppliers', 'SupplierController');
