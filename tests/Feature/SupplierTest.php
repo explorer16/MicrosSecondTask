@@ -13,13 +13,38 @@ class SupplierTest extends TestCase
 {
     public function test_supplier_get_list()
     {
+        $user = User::first();
+        $this->actingAs($user, 'api');
         $response = $this->get('/api/suppliers');
 
         $response->assertStatus(200)->assertJsonStructure([
-            'data' => [],
-            'message' => '',
-            'status' => 200,
-            'success' => true,
+            'data' => [
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'phone',
+                        'contact_name',
+                        'website',
+                        'description',
+                        'created_by',
+                        'updated_by',
+                        'created_at',
+                        'updated_at',
+                    ],
+                ],
+                'pagination' => [
+                    'total',
+                    'count',
+                    'per_page',
+                    'current_page',
+                    'total_pages',
+                    'last_page',
+                ],
+            ],
+            'message',
+            'timestamp',
+            'success',
         ]);
     }
     /**
@@ -47,14 +72,16 @@ class SupplierTest extends TestCase
             'contact_name' => 'Test contact',
             'website' => null,
             'description' => 'Test description',
-            'created_by' => 12
         ]);
         $response->assertStatus(422);
     }
 
     public function test_supplier_update(): void
     {
-        $id = Supplier::latest('id')->value('id');
+        $user = User::first();
+        $this->actingAs($user, 'api');
+
+        $id = Supplier::latest('created_at')->value('id');
         $response = $this->putJson('/api/suppliers/' . $id, [
             'id' => $id,
             'name' => 'New test name',
@@ -62,7 +89,6 @@ class SupplierTest extends TestCase
             'contact_name' => 'New test contact',
             'website' => 'http://newtest.com',
             'description' => 'New test description',
-            'created_by' => $id
         ]);
 
         $response->assertStatus(200);
@@ -70,7 +96,9 @@ class SupplierTest extends TestCase
 
     public function test_supplier_delete(): void
     {
-        $id = Supplier::latest()->value('id');
+        $user = User::first();
+        $this->actingAs($user, 'api');
+        $id = Supplier::latest('created_at')->value('id');
         $response = $this->deleteJson('/api/suppliers/' . $id);
 
         $response->assertStatus(200);
