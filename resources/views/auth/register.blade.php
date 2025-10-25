@@ -1,4 +1,3 @@
-{{-- resources/views/auth/register.blade.php --}}
     <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация — API Client</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -101,10 +101,27 @@
 
             const data = await res.json();
 
-            if (res.ok) {
-                alertBox.className = 'alert alert-success mt-3';
-                alertBox.textContent = 'Регистрация успешна! Токен получен.';
-                localStorage.setItem('access_token', data.token); // сохраняем токен Passport
+            if (res.ok && data.data.token) {
+                alertBox.className = 'alert alert-success mt-3 d-flex align-items-center justify-content-between';
+                alertBox.innerHTML = `
+                    <span>Регистрация прошла успешно</span>
+                    <button id="copyBtn" class="btn btn-sm btn-light border-0" title="Скопировать токен">
+                        <i class="bi bi-clipboard"></i>
+                    </button>
+                `;
+
+                localStorage.setItem('access_token', data.data.token);
+
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.addEventListener('click', async () => {
+                    try {
+                        await navigator.clipboard.writeText(data.data.token);
+                        copyBtn.innerHTML = '<i class="bi bi-clipboard-check"></i>';
+                        setTimeout(() => copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>', 2000);
+                    } catch (err) {
+                        copyBtn.innerHTML = '<i class="bi bi-exclamation-triangle"></i>';
+                    }
+                });
             } else {
                 alertBox.className = 'alert alert-danger mt-3';
                 alertBox.textContent = data.message || 'Ошибка при регистрации.';
