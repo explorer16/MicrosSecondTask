@@ -9,6 +9,8 @@ class History extends Model
 {
     use PrimaryUUID;
 
+    const UPDATED_AT = null;
+
     protected $table = 'histories';
     public $incrementing = false;
     protected $keyType = 'string';
