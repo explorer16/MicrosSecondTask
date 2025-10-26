@@ -9,7 +9,9 @@ trait HasCreatedBy
     protected static function bootHasCreatedBy(): void
     {
         static::creating(function ($model) {
-            $model->created_by = Auth::user()->id;
+            if (!$model->created_by) {
+                $model->created_by = Auth::id();
+            }
         });
     }
 }
