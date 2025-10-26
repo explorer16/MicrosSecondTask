@@ -23,7 +23,9 @@ class Supplier extends JsonResource
             'website' => $this->website,
             'description' => $this->description,
             'created_by' => $this->created_by,
+            'createdBy' => $this->createdBy,
             'updated_by' => $this->updated_by,
+            'updatedBy' => $this->updatedBy,
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
         ];

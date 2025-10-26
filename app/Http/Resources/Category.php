@@ -21,9 +21,9 @@ class Category extends JsonResource
             'parent_id' => $this->parent_id,
             'parent' => $this->parent(),
             'created_by' => $this->created_by,
-            'createdBy' => $this->createdBy(),
+            'createdBy' => $this->createdBy,
             'updated_by' => $this->updated_by,
-            'updatedBy' => $this->createdBy(),
+            'updatedBy' => $this->updatedBy,
             'created_at' => Carbon::parse($this->created_at)->toDateTimeString(),
             'updated_at' => Carbon::parse($this->updated_at)->toDateTimeString(),
         ];
