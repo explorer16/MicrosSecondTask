@@ -65,6 +65,8 @@ services:
     depends_on:
       - db
       - db_test
+    networks:
+        - second_task
 
   rabbitmq:
     image: rabbitmq:4-management
@@ -76,6 +78,8 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
+    networks:
+        - second_task
 
   minio:
     image: minio/minio
@@ -90,6 +94,8 @@ services:
       - "9001:9001"
     volumes:
       - './minio_data:/data'
+    networks:
+        - second_task
 
 networks:
   second_task:
