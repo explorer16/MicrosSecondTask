@@ -6,35 +6,53 @@
 
 Следуйте инструкциям ниже, чтобы развернуть проект локально:
 
+Клонируем репозиторий
 ```bash
-# 1️⃣ Клонируем репозиторий
+
 git clone https://github.com/explorer16/MicrosSecondTask.git
 ```
-
+Переходим в папку проекта
 ```bash
-# 2️⃣ Переходим в папку проекта
+
 cd MicrosSecondTask
 ```
-
+Запускаем Docker-контейнеры
 ```bash
-# 3️⃣ Запускаем Docker-контейнеры
 docker compose up -d
 ```
-```bash
-# 4️⃣ Устанавливаем зависимости Laravel
+Устанавливаем зависимости Laravel
+```bash 
 docker exec second_app composer install
 ```
+Копируем файл окружения
 ```bash
-# 5️⃣ Копируем файл окружения
 docker exec second_app cp .env.example .env
 ```
+Генерируем ключ приложения
 ```bash
-# 6️⃣ Генерируем ключ приложения
+
 docker exec second_app php artisan key:generate
 ```
+Применяем миграции и заполняем тестовыми данными
 ```bash
-# 7️⃣ Применяем миграции и заполняем тестовыми данными
+
 docker exec second_app php artisan migrate:fresh --seed
 ```
+Создаём клиента
+```bash
 
-<hr>
+docker exec second_app php artisan passport:client --personal
+```
+Запускаем воркер
+```bash
+
+docker exec second_app php artisan passport:client --personal
+```
+
+```bash
+docker exec second_app chmod -R 777 storage
+docker exec second_app chmod 600 storage/oauth-private.key
+docker exec second_app chmod 660 storage/oauth-public.key
+```
+Далее следует создать пользователя, после его создания будет выдан токен
+http://localhost:8080/register
