@@ -4,36 +4,36 @@ namespace App\Traits;
 
 trait BooleanSoftDeletes
 {
-    protected function bootBooleanSoftDeletes()
+    protected static function bootBooleanSoftDeletes()
     {
         static::addGlobalScope('active', function ($query) {
-            $query->where('active', true);
+            $query->where('is_active', true);
         });
 
         static::deleting(function ($model) {
-            if ($this->forceDeleting()) {
+            if (method_exists($model, 'forceDeleting') && $model->forceDeleting()) {
                 return;
             }
 
             $model->is_active = false;
-            $model->save();
-
+            $model->timestamps = false;
+            $model->saveQuietly();
             return false;
         });
     }
 
     public function restore()
     {
-        $this->in_active = true;
+        $this->is_active = true;
         $this->save();
     }
 
-    public function withInactive()
+    public static function withInactive()
     {
         return static::withoutGlobalScope('active');
     }
 
-    public function onlyInactive()
+    public static function onlyInactive()
     {
         return static::withoutGlobalScope('active')->where('is_active', false);
     }
