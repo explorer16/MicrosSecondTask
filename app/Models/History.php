@@ -16,6 +16,19 @@ class History extends Model
     protected $keyType = 'string';
     protected $fillable = ['user_id', 'entity_type', 'entity_id', 'action', 'changes', 'created_at'];
 
+    public function scopeFilter($query)
+    {
+        if ($filter = request('user_id')) {
+            $query = $query->where('user_id', $filter);
+        }
+        if ($filter = request('type')) {
+            $query = $query->where('entity_type', $filter);
+        }
+        if ($filter = request('entity_id')) {
+            $query = $query->where('entity_id', $filter);
+        }
+    }
+
     public function entity()
     {
         $this->morphTo();

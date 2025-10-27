@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasCreatedBy;
 use App\Traits\HasUpdatedBy;
+use App\Traits\Historyable;
 use App\Traits\PrimaryUUID;
 use App\Traits\UserRelations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use UserRelations, PrimaryUUID, HasCreatedBy, HasUpdatedBy;
+    use Historyable;
     use HasFactory;
 
     protected $table = 'categories';
