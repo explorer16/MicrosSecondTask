@@ -39,20 +39,6 @@ services:
     networks:
       - second_task
 
-  db_test:
-    image: postgres:15
-    container_name: second_db_test
-    volumes:
-      - db_test_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: test_db
-      POSTGRES_USER: test_user
-      POSTGRES_PASSWORD: 1221
-    ports:
-      - "5433:5432"
-    networks:
-      - second_task
-
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: second_pgadmin
