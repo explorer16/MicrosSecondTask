@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'category_id' => Category::query()->inRandomOrder()->first()->id,
             'supplier_id' => Supplier::query()->inRandomOrder()->first()->id,
             'price' => $this->faker->randomFloat(2, 10000, 1000000),
-            'file_url' => 'files/' . $this->faker->uuid() . '.' . $this->faker->randomElement(['jpg', 'png', 'jpeg']),
+//            'file_url' => 'files/' . $this->faker->uuid() . '.' . $this->faker->randomElement(['jpg', 'png', 'jpeg']),
             'created_by' => User::query()->inRandomOrder()->first()->id,
         ];
     }

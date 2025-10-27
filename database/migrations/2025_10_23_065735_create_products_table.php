@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('category_id')->constrained('categories', 'id');
             $table->foreignUuid('supplier_id')->constrained('suppliers', 'id');
             $table->decimal('price', 9, 2);
-            $table->string('file_url');
+            $table->string('file_url')->nullable();
             $table->boolean('is_active')->default(true)->comment('For soft delete');
             $table->foreignUuid('created_by')->constrained('users', 'id');
             $table->foreignUuid('updated_by')->nullable()->constrained('users', 'id');
