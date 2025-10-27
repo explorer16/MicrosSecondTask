@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ImportProductsRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Models\Product;
@@ -79,8 +80,10 @@ class ProductController extends Controller
         return $this->productRepository->upload($request);
     }
 
-    public function import()
+    public function import(ImportProductsRequest $request)
     {
-        //
+        $this->productRepository->import($request);
+
+        return $this->sendResponse([], 'Import redirected in queue RabbitMQ.');
     }
 }

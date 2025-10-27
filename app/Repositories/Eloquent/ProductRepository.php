@@ -6,9 +6,11 @@ use App\Http\Requests\ImportProductsRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Resources\ProductCollection;
+use App\Jobs\ImportProductsJob;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Traits\Responsable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -53,6 +55,10 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function import(ImportProductsRequest $request)
     {
-        // TODO: Implement import() method.
+        $file = $request->file('import_file');
+
+        $path = Storage::disk('s3')->putFile('imports', $file);
+
+        ImportProductsJob::dispatch(Auth::id(), $path);
     }
 }
