@@ -16,12 +16,14 @@ trait Historyable
 
     public function createHistory(string $action): void
     {
-        History::create([
-            'user_id' => Auth::user()->id,
-            'entity_type' => $this->getMorphClass(),
-            'entity_id' => $this->getKey(),
-            'action' => $action,
-            'changes' => json_encode($this->getAttributes(), JSON_UNESCAPED_UNICODE)
-        ]);
+        if ($id = Auth::id()) {
+            History::create([
+                'user_id' => $id,
+                'entity_type' => $this->getMorphClass(),
+                'entity_id' => $this->getKey(),
+                'action' => $action,
+                'changes' => json_encode($this->getAttributes(), JSON_UNESCAPED_UNICODE)
+            ]);
+        }
     }
 }
