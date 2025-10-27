@@ -43,16 +43,30 @@ docker exec second_app php artisan migrate:fresh --seed
 
 docker exec second_app php artisan passport:client --personal
 ```
-Запускаем воркер
+Создаём ключи
 ```bash
 
-docker exec second_app php artisan passport:client --personal
+docker exec second_app php artisan passport:keys
 ```
-
+Ставим правильные привилегии файлам
 ```bash
-docker exec second_app chmod -R 777 storage
+docker exec second_app chmod -R 775 storage
+docker exec second_app chown -R www-data:www-data /var/www/storage
 docker exec second_app chmod 600 storage/oauth-private.key
 docker exec second_app chmod 660 storage/oauth-public.key
 ```
+
 Далее следует создать пользователя, после его создания будет выдан токен
 http://localhost:8080/register
+
+Переходим в хранилище minio localhost:9001 и создаём bucket [second]
+
+Далее переходим RabbitMQ dashboard http://localhost:15672/ и создаём очередь [products_import_queue]
+
+Запускаем воркер
+```bash
+
+docker exec second_app php artisan queue:work
+```
+
+Приложение готово к работе
