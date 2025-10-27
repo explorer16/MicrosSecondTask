@@ -23,6 +23,7 @@ class UploadFileRequest extends FormRequest
     {
         return [
             'file' => 'required|file|mimes:jpg,jpeg,png',
+            'id' => 'required|uuid'
         ];
     }
 }

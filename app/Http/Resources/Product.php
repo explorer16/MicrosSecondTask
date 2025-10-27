@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends JsonResource
 {
@@ -23,7 +24,7 @@ class Product extends JsonResource
             'supplier_id' => $this->supplier_id,
             'supplier' => $this->supplier,
             'price' => $this->price,
-            'file_url' => '',
+            'file_url' => Storage::disk('s3')->url($this->file_url),
             'created_by' => $this->created_by,
             'createdBy' => $this->createdBy,
             'updated_by' => $this->updated_by,

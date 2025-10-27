@@ -13,8 +13,8 @@ Route::group([
 ], function () {
     Route::apiResource('suppliers', 'SupplierController');
     Route::apiResource('categories', 'CategoryController');
-    Route::apiResource('products', 'ProductController');
     Route::post('/products/upload', 'ProductController@upload');
     Route::post('/products/import', 'ProductController@import');
+    Route::apiResource('products', 'ProductController');
     Route::get('/changes', 'HistoryController@index');
 });

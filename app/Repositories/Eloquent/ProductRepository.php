@@ -44,10 +44,9 @@ class ProductRepository implements ProductRepositoryInterface
         if ($file_url = $product->file_url) {
             Storage::disk('s3')->delete($file_url);
         }
-        $path = Storage::putFile('files', $request->file('file'));
-        $url = Storage::url($path);
+        $path = Storage::disk('s3')->putFile('files', $request->file('file'));
 
-        $product->update(['file_url' => $url]);
+        $product->update(['file_url' => $path]);
 
         return $this->sendResponse([], 'Product upload successfully.');
     }

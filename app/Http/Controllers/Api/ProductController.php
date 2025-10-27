@@ -75,7 +75,7 @@ class ProductController extends Controller
     }
 
     public function upload(UploadFileRequest $request)
-    {logger(1111111);
+    {
         return $this->productRepository->upload($request);
     }
 
